@@ -1,0 +1,13 @@
+PROGRAM CashierSystem
+
+PROCEDURE StartProgram ()
+    READ AND WRITE "item_code" with string
+    DISPLAY "item_name"
+    DISPLAY "item_price"
+    READ AND WRITE "total_price" with number
+    STORE "total_price" with 0
+    SET "total_price" to "total_price" plus "item_price"
+    DISPLAY "total_price"
+END PROCEDURE
+
+CALL StartProgram()
