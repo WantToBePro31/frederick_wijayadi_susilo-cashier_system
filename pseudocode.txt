@@ -1,26 +1,45 @@
 PROGRAM CashierSystem
 
 READ AND WRITE "item_code_database" with array of string
+READ AND WRITE "item_name_database" with array of string
+READ AND WRITE "item_price_database" with array of number
+READ AND WRITE "shopping_stuff" with array of string
 
 FUNCTION CheckItemInDatabase (item_code)
-    IF item_code found in item_database
-        RETURN index of item_code in item_database
+    IF "item_code" found in "item_database"
+        RETURN index of "item_code" in "item_database"
     RETURN -1
 END FUNCTION
 
-PROCEDURE StartProgram ()
+FUNCTION CheckShoppingStuff ()
+    IF size of "shopping_stuff" equal 0
+        RETURN FALSE
+    RETURN TRUE
+END FUNCTION
+
+FUNCTION CountingProcess (current_price)
     READ AND WRITE "item_code" with string
-    READ AND WRITE "item_code_index" with number
     STORE "item_code_index" with CheckItemInDatabase("item_code")
     IF "item_code_index" equal -1
         DISPLAY "Item not found"
     ELSE
-        DISPLAY "item_name"
-        DISPLAY "item_price"
-        READ AND WRITE "total_price" with number
-        STORE "total_price" with 0
-        SET "total_price" to "total_price" plus "item_price"
-        DISPLAY "total_price"
+        DISPLAY "item_name_database"["item_code_index"]
+        DISPLAY "item_price_database"["item_code_index"]
+        SET "current_price" to "current_price" plus "item_price_database"["item_code_index"]
+        REMOVE "item_code_database"["item_code_index"]
+        REMOVE "item_name_database"["item_code_index"]
+        REMOVE "item_price_database"["item_code_index"]
+    RETURN "current_price"
+END FUNCTION
+
+PROCEDURE StartProgram ()
+    STORE "total_price" with 0
+    SET "total_price" to CountingProcess("total_price")
+    STORE "item_still_available" with CheckItemInShoppingStuff()
+    WHILE "item_still_available" is TRUE
+        DO SET "total_price" to CountingProcess("total_price")
+        DO SET "item_still_available" to CheckItemInShoppingStuff()
+    DISPLAY "total_price"
 END PROCEDURE
 
 CALL StartProgram()
