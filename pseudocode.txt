@@ -1,13 +1,26 @@
 PROGRAM CashierSystem
 
+READ AND WRITE "item_code_database" with array of string
+
+FUNCTION CheckItemInDatabase (item_code)
+    IF item_code found in item_database
+        RETURN index of item_code in item_database
+    RETURN -1
+END FUNCTION
+
 PROCEDURE StartProgram ()
     READ AND WRITE "item_code" with string
-    DISPLAY "item_name"
-    DISPLAY "item_price"
-    READ AND WRITE "total_price" with number
-    STORE "total_price" with 0
-    SET "total_price" to "total_price" plus "item_price"
-    DISPLAY "total_price"
+    READ AND WRITE "item_code_index" with number
+    STORE "item_code_index" with CheckItemInDatabase("item_code")
+    IF "item_code_index" equal -1
+        DISPLAY "Item not found"
+    ELSE
+        DISPLAY "item_name"
+        DISPLAY "item_price"
+        READ AND WRITE "total_price" with number
+        STORE "total_price" with 0
+        SET "total_price" to "total_price" plus "item_price"
+        DISPLAY "total_price"
 END PROCEDURE
 
 CALL StartProgram()
