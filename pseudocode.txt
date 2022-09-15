@@ -62,11 +62,11 @@ PROCEDURE StartProgram ()
     STORE "item_still_available" with CheckItemInShoppingStuff()
     WHILE "item_still_available" is TRUE
         DO  SET "total_price" to CountingProcess("total_price")
-        DO  SET "item_still_available" to CheckItemInShoppingStuff()
+            SET "item_still_available" to CheckItemInShoppingStuff()
     STORE "has_discount_coupon" with CheckUserDiscountCoupon()
     WHILE "has_discount_coupon" is TRUE
         DO  STORE "discount_coupon_index" with DiscountingProcess()
-        DO  IF "discount_coupon_index" equal to -1
+            IF "discount_coupon_index" equal to -1
                 DISPLAY "Invalid Coupon"
                 SET "has_discount_coupon" with CheckUserDiscountCoupon()
             ELSE
