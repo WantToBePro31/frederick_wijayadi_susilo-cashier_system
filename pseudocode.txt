@@ -9,28 +9,28 @@ READ AND WRITE "discount_coupon_percentage" with array of number
 
 FUNCTION CheckItemInDatabase (item_code)
     IF "item_code" is found in "item_database"
-        RETURN index of "item_code" in "item_database"
-    RETURN -1
+        RETURN TRUE
+    RETURN FALSE
 END FUNCTION
 
 FUNCTION CheckShoppingStuff ()
-    IF size of "shopping_stuff" equal to 0
+    IF amount of "shopping_stuff" equal to 0
         RETURN FALSE
     RETURN TRUE
 END FUNCTION
 
 FUNCTION CountingProcess (current_price)
     READ AND WRITE "item_code" with string
-    STORE "item_code_index" with CheckItemInDatabase("item_code")
-    IF "item_code_index" equal to -1
+    STORE "item_code_found" with CheckItemInDatabase("item_code")
+    IF "item_code_found" is FALSE
         DISPLAY "Item not found"
     ELSE
-        DISPLAY "item_name_database"["item_code_index"]
-        DISPLAY "item_price_database"["item_code_index"]
-        SET "current_price" to "current_price" plus "item_price_database"["item_code_index"]
-        REMOVE "item_code_database"["item_code_index"]
-        REMOVE "item_name_database"["item_code_index"]
-        REMOVE "item_price_database"["item_code_index"]
+        DISPLAY "item_name_database"
+        DISPLAY "item_price_database"
+        SET "current_price" to "current_price" plus "item_price_database"
+        REMOVE "item_code_database"
+        REMOVE "item_name_database"
+        REMOVE "item_price_database"
     RETURN "current_price"
 END FUNCTION
 
@@ -42,8 +42,8 @@ END FUNCTION
 
 FUNCTION ValidateDiscountCoupon (discount_coupon)
     IF "discount_coupon" is found in "discount_coupon_database"
-        RETURN index of "discount_coupon" in "discount_coupon_database"
-    RETURN -1
+        RETURN TRUE
+    RETURN FALSE
 END FUNCTION
 
 FUNCTION DiscountingProcess ()
@@ -65,12 +65,12 @@ PROCEDURE StartProgram ()
             SET "item_still_available" to CheckItemInShoppingStuff()
     STORE "has_discount_coupon" with CheckUserDiscountCoupon()
     WHILE "has_discount_coupon" is TRUE
-        DO  STORE "discount_coupon_index" with DiscountingProcess()
-            IF "discount_coupon_index" equal to -1
+        DO  STORE "discount_coupon_found" with DiscountingProcess()
+            IF "discount_coupon_found" is FALSE
                 DISPLAY "Invalid Coupon"
                 SET "has_discount_coupon" with CheckUserDiscountCoupon()
             ELSE
-                SET "total_price" to UpdatePriceWithDiscount("total_price", "discount_coupon_percentage"[discount_coupon_index"])
+                SET "total_price" to UpdatePriceWithDiscount("total_price", "discount_coupon_percentage")
                 SET "has_discount_coupon" to FALSE
     DISPLAY "total_price"
 END PROCEDURE
