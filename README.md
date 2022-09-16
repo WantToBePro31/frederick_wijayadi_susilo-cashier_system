@@ -4,6 +4,8 @@
 
 A Simple Cashier System Workflow
 
+Every store must have a cash register for its payment system. The workflow of the cashier system is actually simple, but there are people who still don't understand how it works and how to use it. Therefore, I created a simple flowchart and pseudocode to help people understand the cashier system workflow.
+
 ## Author
 
 `Frederick Wijayadi Susilo - BE3247968`
